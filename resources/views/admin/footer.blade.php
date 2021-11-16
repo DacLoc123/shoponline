@@ -6,6 +6,5 @@
 <!-- AdminLTE App -->
 <script src="/template/admin/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="/template/admin/dist/js/demo.js"></script>
 <script src="/template/admin/js/main.js"></script>
 @yield('footer')

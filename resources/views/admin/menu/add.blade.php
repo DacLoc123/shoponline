@@ -5,29 +5,32 @@
 @section('content')
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Quick Example</h3>
+            <h3 class="card-title">{{ $title }}</h3>
         </div>
         <!-- /.card-header -->
+        @include('admin.alert')
         <!-- form start -->
-        <form action="" method="POST">
+        <form action="/admin/menus/add/store" method="POST">
             <div class="card-body">
                 <div class="form-group">
                     <label>Tên Danh Mục </label>
-                    <input type="text" name="menu" class="form-control" id="menu" placeholder="Enter name">
+                    <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="menu"
+                           placeholder="Nhập tên danh mục">
                 </div>
                 <div class="form-group">
                     <label>Danh Mục </label>
                     <select class="form-control" name="parent_id">
-                        <option value="0"> Danh Mục</option>
+                        <option value="0"> Danh Mục Cha</option>
+                        {!! \App\Helpers\Helper::getParent($menus) !!}
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Mô Tả Ngắn </label>
-                    <textarea name="description" class="form-control"></textarea>
+                    <textarea name="description" class="form-control">{{ old('description') }}</textarea>
                 </div>
                 <div class="form-group">
                     <label>Mô Tả Chi Tiết </label>
-                    <textarea name="content" id="content" class="form-control"></textarea>
+                    <textarea name="content" id="content" class="form-control">{{ old('content') }}</textarea>
                 </div>
                 <div class="form-group">
                     <label>Kích Hoạt</label>
@@ -47,6 +50,7 @@
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Tạo Danh Mục</button>
             </div>
+            @csrf
         </form>
     </div>
 @endsection

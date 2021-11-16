@@ -25,9 +25,13 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('main', [LoginController::class, 'index']);
         Route::get('/', [MainController::class, 'index'])->name('admin');
-        Route::prefix('menus')->group(function ()
-        {
-         Route::get('add',[MenuController::class,'create']);
+        Route::prefix('menus')->group(function () {
+            Route::get('list', [MenuController::class, 'index']);
+            Route::get('add', [MenuController::class, 'create']);
+            Route::DELETE('destroy', [MenuController::class, 'destroy']);
+            Route::get('edit/{menu}', [MenuController::class, 'show']);
+            Route::post('edit/{menu}', [MenuController::class, 'update']);
+            Route::post('add/store', [MenuController::class, 'store']);
         });
     });
 });
