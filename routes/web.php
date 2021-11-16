@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\Users\LoginController;
 use \App\Http\Controllers\Admin\MainController;
 use \App\Http\Controllers\Admin\MenuController;
+use \App\Http\Controllers\Admin\SliderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +34,18 @@ Route::middleware(['auth'])->group(function () {
             Route::post('edit/{menu}', [MenuController::class, 'update']);
             Route::post('add/store', [MenuController::class, 'store']);
         });
+
+        Route::prefix('sliders')->group(function () {
+            Route::get('list', [SliderController::class, 'index']);
+            Route::get('add', [SliderController::class, 'create']);
+            Route::post('add/store', [SliderController::class, 'store']);
+            Route::DELETE('destroy', [SliderController::class, 'destroy']);
+            Route::get('edit/{slider}', [SliderController::class, 'show']);
+            Route::post('edit/{slider}', [SliderController::class, 'update']);
+
+        });
+
+
+        Route::post('upload/services', [\App\Http\Controllers\Admin\UploadController::class, 'store']);
     });
 });

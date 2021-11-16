@@ -104,13 +104,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="/admin/slider/add" class="nav-link">
+                            <a href="/admin/sliders/add" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Thêm Slider</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/admin/slider/list" class="nav-link">
+                            <a href="/admin/sliders/list" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Danh Sách Slider</p>
                             </a>
