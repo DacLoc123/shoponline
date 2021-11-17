@@ -128,13 +128,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="/admin/product/add" class="nav-link">
+                            <a href="/admin/products/add" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Thêm Sản phẩm</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/admin/product/list" class="nav-link">
+                            <a href="/admin/products/list" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Danh Sách Sản phẩm</p>
                             </a>

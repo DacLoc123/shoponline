@@ -18,4 +18,14 @@ class Menu extends Model
         'active',
         'thumb'
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'menu_id', 'id');
+    }
+
+    public function scopeGetMenu($query)
+    {
+        return $query->where('active', 1);
+    }
 }
