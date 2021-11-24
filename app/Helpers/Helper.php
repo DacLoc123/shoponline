@@ -4,6 +4,8 @@
 namespace App\Helpers;
 
 
+use Illuminate\Support\Str;
+
 class Helper
 {
     public static function getParent($menus, $parent_id = 0, $char = '')
@@ -107,6 +109,143 @@ class Helper
                         </td>
                     </tr>
                 ';
+        }
+        return $html;
+    }
+
+    #Menu mainpage
+    public static function menus($menus, $parent_id = 0): string
+    {
+        $html = '';
+        foreach ($menus as $key => $menu) {
+            if ($menu->parent_id == $parent_id) {
+                $html .= '
+                    <li class="dropdown">
+                        <a class="nav-link"  href="/danh-muc/' . $menu->id . '-' . Str::slug($menu->name, '-') . '.html">
+                            ' . $menu->name . '
+                        </a>';
+
+                unset($menus[$key]);
+
+                if (self::isChild($menus, $menu->id)) {
+                    $html .= '<ul class="dropdown-menu">';
+                    $html .= self::menus($menus, $menu->id);
+                    $html .= '</ul>';
+                }
+
+                $html .= '</li>';
+            }
+        }
+
+        return $html;
+    }
+
+    public static function isChild($menus, $id): bool
+    {
+        foreach ($menus as $menu) {
+            if ($menu->parent_id == $id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static function checkprice($price, $price_sale)
+    {
+        if ($price_sale != 0) {
+            return '<span class="text-left text-danger" style="font-size: 18px; font-weight: 600;">' .
+                number_format($price_sale)
+                . '<span class="font-size:4px !important;">&ensp;đ</span></span>
+                <span class="text-right ml-4" style="font-size: 18px; font-weight: 600; text-decoration: line-through;">
+                    ' . number_format($price) . '<span class="font-size:4px !important;">&ensp;đ</span>
+                </span>';
+        } elseif ($price == 0 && $price_sale == 0) {
+            return '<span class="text-dark" style="font-size: 18px;">Liên hệ</span>';
+        } else {
+            return '<span class="text-dark" style="font-size: 18px;">' . number_format($price) . '<span class="font-size:4px !important;">&ensp;đ</span></span>';
+        }
+    }
+
+    public static function pricesa($price, $price_sale)
+    {
+        if ($price_sale != 0) {
+            return '<h5 class="text-danger">' . number_format($price_sale) . '<span class="font-size:4px !important;">&ensp;đ</span><del class="text-dark ml-3">' . number_format($price) . '<span class="font-size:4px !important;">&ensp;đ</span></del>';
+        } elseif ($price == 0 && $price_sale == 0) {
+            return '<span class="text-dark" style="font-size: 18px;">Liên hệ</span>';
+        } else {
+            return '<h5>' . number_format($price) . '<span class="font-size:4px !important;">&ensp;đ</span></h5>';
+        }
+
+    }
+
+    public static function productbycate_grid($products)
+    {
+        $html = '';
+        foreach ($products as $item) {
+            $html .= '<div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                        <div class="products-single fix">
+                                            <div class="box-img-hover">
+                                                <div class="type-lb">
+                                                    <p class="sale">Sale</p>
+                                                </div>
+                                                <img src="' . $item->thumb . '" style="max-height:480px;max-width:360px;" class="img-fluid" alt="' . $item->name . '">
+                                                <div class="mask-icon">
+                                                    <ul>
+                                                    <li>
+                                                        <a href="/san-pham/'.$item->id.'-'.Str::slug($item->name,'-').'.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Xem chi tiết">
+                                                                   <i class="fas fa-eye"></i>
+                                                        </a>
+                                                    </li>
+                                                    </ul>
+                                                    <a class="cart" href="#">Thêm vào giỏ hàng</a>
+                                                </div>
+                                            </div>
+                                            <div class="why-text">
+                                                <h4 class="text-lg-left"><a href="/san-pham/'.$item->id.'-'.Str::slug($item->name,'-').'.html" class="nav-link">' . $item->name . '<a/></h4>
+                                                   <h4 class="nav-link">' . self::pricesa($item->price, $item->price_sale) . '</h4>
+                                            </div>
+                                        </div>
+                                    </div>';
+        }
+        return $html;
+    }
+
+    public static function productbycate_list($products)
+    {
+        $html = '';
+        foreach ($products as $item) {
+            $html .= '<div class="list-view-box">
+                         <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                <div class="products-single fix">
+                                    <div class="box-img-hover">
+                                        <div class="type-lb">
+                                            <p class="new">New</p>
+                                        </div>
+                                        <img src="' . $item->thumb . '" class="img-fluid"
+                                             alt="' . $item->name . '">
+                                        <div class="mask-icon">
+                                            <ul>
+                                                <li><a href="/san-pham/'.$item->id.'-'.Str::slug($item->name,'-').'.html" data-toggle="tooltip"
+                                                       data-placement="right" title="Xem chi tiết"><i
+                                                            class="fas fa-eye"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                                <div class="why-text full-width">
+                                    <h4><a href="/san-pham/'.$item->id.'-'.Str::slug($item->name,'-').'.html" class="nav-link">' . $item->name . '</a></h4>
+                                    ' . self::pricesa($item->price, $item->price_sale) . '
+                                    <p>' . $item->content . '</p>
+                                    <a class="btn hvr-hover" href="#">Thêm vào giỏ hàng</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
         }
         return $html;
     }

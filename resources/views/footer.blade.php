@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-link">
-                        <h4>Information</h4>
+                        <h4>Thông tin</h4>
                         <ul>
                             <li><a href="#">Thông tin về chúng tôi</a></li>
                             <li><a href="#">Dịch vụ khách hàng</a></li>
