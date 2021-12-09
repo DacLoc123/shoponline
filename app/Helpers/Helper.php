@@ -154,27 +154,30 @@ class Helper
     public static function checkprice($price, $price_sale)
     {
         if ($price_sale != 0) {
-            return '<span class="text-left text-danger" style="font-size: 18px; font-weight: 600;">' .
+            return '<span class="text-left text-danger nav-link" style="font-size: 18px; font-weight: 600;">' .
                 number_format($price_sale)
-                . '<span class="font-size:4px !important;">&ensp;đ</span></span>
+                . '<span style="font-size:4px !important;">&ensp;đ</span></span>
                 <span class="text-right ml-4" style="font-size: 18px; font-weight: 600; text-decoration: line-through;">
-                    ' . number_format($price) . '<span class="font-size:4px !important;">&ensp;đ</span>
+                    ' . number_format($price) . '<span style="font-size:4px !important;">&ensp;đ</span>
                 </span>';
         } elseif ($price == 0 && $price_sale == 0) {
-            return '<span class="text-dark" style="font-size: 18px;">Liên hệ</span>';
+            return '<span class="text-dark nav-link" style="font-size: 18px;">Liên hệ</span>';
         } else {
-            return '<span class="text-dark" style="font-size: 18px;">' . number_format($price) . '<span class="font-size:4px !important;">&ensp;đ</span></span>';
+            return '<span class="text-dark nav-link" style="font-size: 18px;">' .
+                number_format($price) . '<span style="font-size:4px !important;">&ensp;đ</span></span>';
         }
     }
 
     public static function pricesa($price, $price_sale)
     {
         if ($price_sale != 0) {
-            return '<h5 class="text-danger">' . number_format($price_sale) . '<span class="font-size:4px !important;">&ensp;đ</span><del class="text-dark ml-3">' . number_format($price) . '<span class="font-size:4px !important;">&ensp;đ</span></del>';
+            return '<span class="text-danger nav-link">' .
+                number_format($price_sale) . '<span style="font-size:4px !important;">&ensp;đ</span><del class="text-dark ml-1">' .
+                number_format($price) . '<span style="font-size:4px !important;">&ensp;đ</span></del>';
         } elseif ($price == 0 && $price_sale == 0) {
-            return '<span class="text-dark" style="font-size: 18px;">Liên hệ</span>';
+            return '<span class="text-dark nav-link" style="font-size: 18px;">Liên hệ</span>';
         } else {
-            return '<h5>' . number_format($price) . '<span class="font-size:4px !important;">&ensp;đ</span></h5>';
+            return '<span class="nav-link">' . number_format($price) . '<span class="font-size:4px !important;">&ensp;đ</span></span>';
         }
 
     }
@@ -193,7 +196,7 @@ class Helper
                                                 <div class="mask-icon">
                                                     <ul>
                                                     <li>
-                                                        <a href="/san-pham/'.$item->id.'-'.Str::slug($item->name,'-').'.html" data-toggle="tooltip" data-placement="right"
+                                                        <a href="/san-pham/' . $item->id . '-' . Str::slug($item->name, '-') . '.html" data-toggle="tooltip" data-placement="right"
                                                                    title="Xem chi tiết">
                                                                    <i class="fas fa-eye"></i>
                                                         </a>
@@ -203,8 +206,8 @@ class Helper
                                                 </div>
                                             </div>
                                             <div class="why-text">
-                                                <h4 class="text-lg-left"><a href="/san-pham/'.$item->id.'-'.Str::slug($item->name,'-').'.html" class="nav-link">' . $item->name . '<a/></h4>
-                                                   <h4 class="nav-link">' . self::pricesa($item->price, $item->price_sale) . '</h4>
+                                                <h4 class="text-lg-left"><a href="/san-pham/' . $item->id . '-' . Str::slug($item->name, '-') . '.html" class="nav-link">' . $item->name . '<a/></h4>
+                                                   <h4>' . self::pricesa($item->price, $item->price_sale) . '</h4>
                                             </div>
                                         </div>
                                     </div>';
@@ -228,7 +231,7 @@ class Helper
                                              alt="' . $item->name . '">
                                         <div class="mask-icon">
                                             <ul>
-                                                <li><a href="/san-pham/'.$item->id.'-'.Str::slug($item->name,'-').'.html" data-toggle="tooltip"
+                                                <li><a href="/san-pham/' . $item->id . '-' . Str::slug($item->name, '-') . '.html" data-toggle="tooltip"
                                                        data-placement="right" title="Xem chi tiết"><i
                                                             class="fas fa-eye"></i></a></li>
                                             </ul>
@@ -238,7 +241,7 @@ class Helper
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
                                 <div class="why-text full-width">
-                                    <h4><a href="/san-pham/'.$item->id.'-'.Str::slug($item->name,'-').'.html" class="nav-link">' . $item->name . '</a></h4>
+                                    <h4><a href="/san-pham/' . $item->id . '-' . Str::slug($item->name, '-') . '.html" class="nav-link text-dark">' . $item->name . '</a></h4>
                                     ' . self::pricesa($item->price, $item->price_sale) . '
                                     <p>' . $item->content . '</p>
                                     <a class="btn hvr-hover" href="#">Thêm vào giỏ hàng</a>

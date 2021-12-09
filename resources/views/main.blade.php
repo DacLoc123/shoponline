@@ -78,7 +78,13 @@
                     <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                     <li class="side-menu"><a href="#">
                             <i class="fa fa-shopping-bag"></i>
-                            <span class="badge">3</span>
+                            <span class="badge">
+                                @if(isset($products_cart))
+                                    @php count($products_cart) @endphp
+                                @else
+                                    0
+                                @endif
+                            </span>
                         </a></li>
                 </ul>
             </div>
@@ -88,23 +94,30 @@
         <div class="side">
             <a href="#" class="close-side"><i class="fa fa-times"></i></a>
             <li class="cart-box">
+                @php $sumPriceCart = 0; @endphp
                 <ul class="cart-list">
-                    <li>
-                        <a href="#" class="photo"><img src="/template/client/images/img-pro-01.jpg" class="cart-thumb"
-                                                       alt=""/></a>
-                        <h6><a href="#">Delica omtantur </a></h6>
-                        <p>1x - <span class="price">$80.00</span></p>
-                    </li>
-                    <li>
-                        <a href="#" class="photo"><img src="/template/client/images/img-pro-02.jpg" class="cart-thumb"
-                                                       alt=""/></a>
-                        <h6><a href="#">Omnes ocurreret</a></h6>
-                        <p>1x - <span class="price">$60.00</span></p>
-                    </li>
-                    <li class="total">
-                        <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                        <span class="float-right"><strong>Total</strong>: $180.00</span>
-                    </li>
+                    @if (isset($products_cart) > 0)
+                        @foreach($products_cart as $item)
+                            @php
+                                $price = $item->price_sale != 0 ? $item->price_sale : $item->price;
+                                $sumPriceCart += $item->price_sale != 0 ? $item->price_sale : $item->price;
+                            @endphp
+                            <li>
+                                <a href="#" class="photo"><img src="{{ $item->thumb }}"
+                                                               class="cart-thumb"
+                                                               style="max-height: 48px;max-width: 48px;"
+                                                               alt="{{ $item->name }}"/></a>
+                                <h6><a href="#">{{ $item->name }}</a></h6>
+                                <p><span class="price">{!! $price !!}</span><span style="font-size:4px !important;">&ensp;đ</span></p>
+                            </li>
+                        @endforeach
+                        <li class="total">
+                            <a href="/carts" class="btn btn-default hvr-hover btn-cart">Giỏ hàng</a>
+                            <span class="float-right"><strong>Tổng</strong>: {{ number_format($sumPriceCart, '0', '', '.') }}</span>
+                        </li>
+                    @else
+                        Không có sản phẩm
+                    @endif
                 </ul>
             </li>
         </div>
